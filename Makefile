@@ -1,4 +1,5 @@
-all: dut_aes32 dut_aesbitsliced dut_cmpmemcmp dut_cmpct dut_donna dut_donnabad 
+#all: dut_aes32 dut_aesbitsliced dut_cmpmemcmp dut_cmpct dut_donna dut_donnabad dut_float
+all: dut_float
 
 OBJS = src/cpucycles.o src/fixture.o src/random.o \
 src/ttest.o src/percentile.o
@@ -12,6 +13,7 @@ dut/aesbitsliced/consts_aes128ctr.o \
 dut/aesbitsliced/int128_aes128ctr.o \
 dut/aesbitsliced/stream_aes128ctr.o \
 dut/aesbitsliced/xor_afternm_aes128ctr.o
+OBJST_FLOAT = dut/float/float.o
 # CC=clang
 OPTIMIZATION=-O2
 #CFLAGS	= -Weverything -O0 -fsanitize=memory -fno-omit-frame-pointer -g -std=c11
@@ -20,6 +22,8 @@ LIBS	= -lm
 #LDFLAGS	= -fsanitize=memory -fno-omit-frame-pointer -g 
 #LDFLAGS = -Weverything $(OPTIMIZATION) -std=c11
 LDFLAGS = $(OPTIMIZATION) -std=c11
+
+EMITLLVM = -emit-llvm -S
 
 INCS	= -Iinc/
 
@@ -40,6 +44,9 @@ dut_donna: $(OBJS) $(OBJS_DONNA) dut/donna/dut_donna.c
 
 dut_donnabad: $(OBJS) $(OBJS_DONNABAD) dut/donnabad/dut_donnabad.c
 	$(CC) $(LDFLAGS) $(INCS) -o dudect_donnabad_$(OPTIMIZATION) dut/donnabad/$@.c $(OBJS) $(OBJS_DONNABAD) $(LIBS)
+
+dut_float: $(OBJS) $(OBJS_DONNABAD) dut/float/dut_float.c
+	$(CC) $(LDFLAGS) $(INCS) -o dudect_float_$(OPTIMIZATION) dut/float/$@.c $(OBJS) $(OBJS_FLOAT) $(LIBS)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
