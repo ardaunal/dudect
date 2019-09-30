@@ -1,0 +1,15 @@
+digraph "CFG for 'prepare_inputs' function" {
+	label="CFG for 'prepare_inputs' function";
+
+	Node0x55f07874d5f0 [shape=record,label="{entry:\l  tail call void @randombytes(i8* %input_data, i64 16000000) #5\l  br label %for.body\l}"];
+	Node0x55f07874d5f0 -> Node0x55f07874d890;
+	Node0x55f07874d9a0 [shape=record,label="{for.cond.cleanup:                                 \l  ret void\l}"];
+	Node0x55f07874d890 [shape=record,label="{for.body:                                         \l  %i.011 = phi i64 [ 0, %entry ], [ %inc, %for.inc ]\l  %call = tail call zeroext i8 @randombit() #5\l  %arrayidx = getelementptr inbounds i8, i8* %classes, i64 %i.011\l  store i8 %call, i8* %arrayidx, align 1, !tbaa !2\l  %cmp2 = icmp eq i8 %call, 0\l  br i1 %cmp2, label %if.then, label %for.inc\l|{<s0>T|<s1>F}}"];
+	Node0x55f07874d890:s0 -> Node0x55f07874e0a0;
+	Node0x55f07874d890:s1 -> Node0x55f07874dac0;
+	Node0x55f07874e0a0 [shape=record,label="{if.then:                                          \l  %mul = shl i64 %i.011, 4\l  %add.ptr = getelementptr inbounds i8, i8* %input_data, i64 %mul\l  tail call void @llvm.memset.p0i8.i64(i8* align 1 %add.ptr, i8 0, i64 16, i1\l... false)\l  br label %for.inc\l}"];
+	Node0x55f07874e0a0 -> Node0x55f07874dac0;
+	Node0x55f07874dac0 [shape=record,label="{for.inc:                                          \l  %inc = add nuw nsw i64 %i.011, 1\l  %exitcond = icmp eq i64 %inc, 1000000\l  br i1 %exitcond, label %for.cond.cleanup, label %for.body\l|{<s0>T|<s1>F}}"];
+	Node0x55f07874dac0:s0 -> Node0x55f07874d9a0;
+	Node0x55f07874dac0:s1 -> Node0x55f07874d890;
+}

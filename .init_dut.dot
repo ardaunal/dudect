@@ -1,0 +1,5 @@
+digraph "CFG for 'init_dut' function" {
+	label="CFG for 'init_dut' function";
+
+	Node0x55f07874d230 [shape=record,label="{entry:\l  ret void\l}"];
+}

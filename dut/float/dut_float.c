@@ -17,7 +17,7 @@ double do_one_computation(uint8_t *data) {
     if (secret[i] != 0)
       sum += secret[i];
 	else
-      sum += secret[i];
+      sum -= secret[i];
   }
   return sum;
 }
